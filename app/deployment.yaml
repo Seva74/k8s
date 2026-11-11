@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: orders-api
-          image: orderflow-api:v1
+          image: orderflow-api:v2
           imagePullPolicy: IfNotPresent
 
           ports:
@@ -33,3 +33,27 @@ spec:
           env:
             - name: APP_VERSION
               value: "0.1.0"
+
+          startupProbe:
+            httpGet:
+              path: /health/live
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 12
+
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 2

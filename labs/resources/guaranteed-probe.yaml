@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: guaranteed-probe
+  namespace: orderflow-lab
+
+spec:
+  restartPolicy: Always
+
+  containers:
+    - name: sleeper
+      image: orderflow-api:v2
+      imagePullPolicy: IfNotPresent
+
+      command: ["python", "-u", "-c"]
+      args:
+        - |
+          import time
+          print("Guaranteed Pod started", flush=True)
+          time.sleep(3600)
+
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+        limits:
+          cpu: "100m"
+          memory: "64Mi"

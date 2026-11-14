@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pending-lab
+  namespace: orderflow-lab
+
+spec:
+  containers:
+    - name: test
+      image: orderflow-api:v2
+      imagePullPolicy: IfNotPresent
+
+      command: ["python", "-c"]
+      args: ["import time; time.sleep(3600)"]
+
+      resources:
+        requests:
+          cpu: "100"
+          memory: "64Mi"

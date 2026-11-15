@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: orders-api
-          image: orderflow-api:v2
+          image: orderflow-api:v3
           imagePullPolicy: IfNotPresent
 
           ports:
@@ -57,7 +57,7 @@ spec:
             periodSeconds: 5
             timeoutSeconds: 2
             failureThreshold: 2
-            
+
           resources:
             requests:
               cpu: "100m"

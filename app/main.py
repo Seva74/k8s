@@ -1,6 +1,7 @@
 import os
 import socket
 from pathlib import Path
+from time import perf_counter
 
 from fastapi import FastAPI, HTTPException
 
@@ -40,4 +41,30 @@ def readiness():
 
     return {
         "status": "ready"
+    }
+
+
+@app.get("/work")
+def cpu_work(duration: float = 0.5):
+    duration = max(0.05, min(duration, 2.0))
+
+    start = perf_counter()
+    deadline = start + duration
+
+    result = 1
+    iterations = 0
+
+    while perf_counter() < deadline:
+        result = (
+            result * 1103515245 + 12345
+        ) % 2147483648
+
+        iterations += 1
+
+    return {
+        "service": "orders-api",
+        "status": "completed",
+        "hostname": socket.gethostname(),
+        "duration_seconds": round(perf_counter() - start, 3),
+        "iterations": iterations
     }

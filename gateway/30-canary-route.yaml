@@ -10,6 +10,9 @@ spec:
     - name: orderflow-gateway
       sectionName: http
 
+    - name: orderflow-gateway
+      sectionName: https
+
   hostnames:
     - orders.example.local
 

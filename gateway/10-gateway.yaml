@@ -17,3 +17,19 @@ spec:
       allowedRoutes:
         namespaces:
           from: Same
+
+    - name: https
+      hostname: orders.example.local
+      protocol: HTTPS
+      port: 443
+
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: orders-example-tls
+
+      allowedRoutes:
+        namespaces:
+          from: Same
